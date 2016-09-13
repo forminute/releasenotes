@@ -30,7 +30,8 @@
     	$.fn.releaseNotes = function(settings){
 	 	settings = $.extend({}, defaultSettings, settings || {});
 	 	var apiPath = settings.phpApiPath+"api.php";
-	 	var respType = (settings.phpApi) ? "json" : "jsonp";
+    //var respType = (settings.phpApi) ? "json" : "jsonp";
+	 	var respType = "json";
 
 		var releases = {
 			load: function(el){
@@ -170,7 +171,10 @@
 				return $.ajax({
 					url:this.urls[options.action](options),
 					dataType:respType,
-					data:myoption
+					data:myoption,
+          headers: {
+              'Authorization': 'Basic ' + btoa('lloydzhou:353c63ee18e555aa234e72aaf254a6af46d6e94a')
+          }
 				});
 			}, 
 			urls : {
