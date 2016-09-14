@@ -40,7 +40,7 @@
 				this.loadEvents();
 
 				var options = $.extend(settings, {
-					state: "closed",
+          state: "closed",
 					action: "milestones",
 					sort:"due_date"
 				});
@@ -54,16 +54,16 @@
 			},
 			loadEvents : function(){
 				var _this = this;
-				if(settings.showDescription) this.$el.delegate(".issue", "click", function(){ _this.loadIssueDesc(this); return false;});
+				if(settings.showDescription) this.$el.delegate(".issueTitle", "click", function(){ _this.loadIssueDesc(this); return false;});
 				if(settings.showComments) this.$el.delegate(".btnComments", "click", function(){ _this.loadComments(this); return false;});
 			},
 			loadIssueDesc : function(el){
-				var $issue = $(el);
+				var $issue = $(el).parent().parent();
 				var data = $issue.data("issue");
 				$bigIssue = $issue.find(".issueBig");
 
 				if(!$bigIssue.is(":visible")){
-					$(".issueBig").not($bigIssue).slideUp();
+          //$(".issueBig").not($bigIssue).slideUp();
 					$bigIssue.find(".container").html(components.bigIssue(data, settings.showComments));
 					$bigIssue.slideDown();
 				}else{
@@ -81,7 +81,7 @@
 						milestone: milestone.number,
 						sort:"created",
 						action:"issues",
-						state:"closed"
+            state:"closed"
 					});
 					_this.callApi(options).success(function(resp, textStatus, jqXHR){
 						if(resp.data) resp= resp.data;
@@ -129,6 +129,7 @@
 				if(settings.showDescription) jqMilestone.find(".issue").addClass("cursor");
 			},
 			getPrettyDate : function(date){
+        if (!date) return '';
 				var dateFormat = "";
 				var date = date.split("T");
 				var dateArray = date[0].split("-");
@@ -173,7 +174,7 @@
 					dataType:respType,
 					data:myoption,
           headers: {
-              'Authorization': 'Basic ' + btoa('lloydzhou:e68e5a454a568713fe60ddc5e64bce920c9c3399')
+              'Authorization': 'Basic ' + btoa('lloydzhou:a41d772201e23a4b7b00e1c3e3064bbb7e804110')
           }
 				});
 			}, 
@@ -240,7 +241,7 @@
 	            <div class="bubble">\
 	              <div class="comment starting-comment adminable" id="issue-3542089">\
 	                <div class="body">\
-	                  <p class="author">Opened by <a href="'+data.user.url+'">'+data.user.login+'</a>, issue closed on '+data.prettyDate+'</p>\
+                    <p class="author">Opened by <a href="'+data.user.url.replace('api.', '').replace('users/', '')+'">'+data.user.login+'</a>, issue closed on '+data.prettyDate+'</p>\
 	                  <h2 class="content-title"> '+$("<span>").html(data.title).text()+'</h2>\
 	                  <div class="formatted-content"> \
 	                    <div class="content-body markdown-body markdown-format">\
