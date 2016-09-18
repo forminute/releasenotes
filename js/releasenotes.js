@@ -24,7 +24,8 @@
 		showComments 			: true,
 		// Used if phpApi is set to false
 	     	repo		            		: 'rails',
-	     	username       			: 'rails'
+	     	username       			: 'rails',
+    state: "closed",
 	 };
 
     	$.fn.releaseNotes = function(settings){
@@ -40,7 +41,6 @@
 				this.loadEvents();
 
 				var options = $.extend(settings, {
-          state: "closed",
 					action: "milestones",
 					sort:"due_date"
 				});
@@ -81,7 +81,6 @@
 						milestone: milestone.number,
 						sort:"created",
 						action:"issues",
-            state:"closed"
 					});
 					_this.callApi(options).success(function(resp, textStatus, jqXHR){
 						if(resp.data) resp= resp.data;
@@ -174,7 +173,7 @@
 					dataType:respType,
 					data:myoption,
           headers: {
-              'Authorization': 'Basic ' + btoa('lloydzhou:a41d772201e23a4b7b00e1c3e3064bbb7e804110')
+              'Authorization': 'Basic ' + btoa('lloydzhou:38ca7e7ab15241d7bd813243d0f7ffc1f83d2879')
           }
 				});
 			}, 
