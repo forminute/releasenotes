@@ -27,7 +27,7 @@
 				// If you want to show private repo
 				// You need to add repo credentials in api.php
 				phpApi 				: false,
-					phpApiPath		: '/',
+        phpApiPath		: '/',
 				showDescription 			: true,
 				showComments 			: true,
 				// Used if phpAPI is false
@@ -35,6 +35,24 @@
         repo		            		: $(this).attr('id'),
   			username          			: 'forminute'
 			});
+      })
+      $('#filter').keyup(function(e){
+        var self = $(this), keyword = self.val(), r = new RegExp(keyword, 'ig');
+        var res = $('h1').filter(function(i, h){
+          var M = $('h3', $(h).next()).filter(function(i, m){
+            var I = $('.issue', m).filter(function(i, issue){
+              var show = r.test($(issue).text()), style = {display: show ? 'block' : 'none'};
+              $(m).css(style)
+              return show;
+            })
+            var show = I.length > 0 || r.test($(m).text()), style = {display: show ? 'block' : 'none'};
+            $(m).parent().css(style)
+            return show;
+          })
+          var show = M.length > 0 || r.test($(h).text()), style = {display: show ? 'block' : 'none'};
+          $(h).css(style).next().css(style)
+          return show
+        });
       })
 		});
 	</script>
@@ -44,6 +62,10 @@
 	<div class="containerRelease">
     <a target="_self" href="?state=">进行中</a>
     <a target="_self" href="?state=closed">已完成</a>
+
+    <br />
+    <input id="filter" value="" placeholder="project,milestone,issue to search" style="width: 80%;margin: 20px 0;padding: 10px;"/>
+
 		<h1>Boom</h1>
 		<div id="boom" role="main"></div>
 		<h1>jianxun-v2-b</h1>
